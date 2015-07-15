@@ -68,6 +68,7 @@ function sanitizeProps(props) {
 
 },{"../helpers/ariaAppHider":3,"../helpers/injectCSS":5,"./ModalPortal":2,"react-dom":10,"react/lib/ExecutionEnvironment":30}],2:[function(_dereq_,module,exports){
 var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
+var ReactDOM = _dereq_('react-dom');
 var div = React.DOM.div;
 var focusManager = _dereq_('../helpers/focusManager');
 var scopeTab = _dereq_('../helpers/scopeTab');
@@ -134,7 +135,7 @@ var ModalPortal = module.exports = React.createClass({
   },
 
   open: function() {
-    focusManager.setupScopedFocus(this.getDOMNode());
+    focusManager.setupScopedFocus(ReactDOM.findDOMNode(this));
     focusManager.markForFocusLater();
     this.setState({isOpen: true}, function() {
       this.setState({afterOpen: true});
@@ -151,7 +152,7 @@ var ModalPortal = module.exports = React.createClass({
   },
 
   focusContent: function() {
-    this.refs.content.getDOMNode().focus();
+    this.refs.content.focus();
   },
 
   closeWithTimeout: function() {
@@ -173,7 +174,7 @@ var ModalPortal = module.exports = React.createClass({
   },
 
   handleKeyDown: function(event) {
-    if (event.keyCode == 9 /*tab*/) scopeTab(this.refs.content.getDOMNode(), event);
+    if (event.keyCode == 9 /*tab*/) scopeTab(this.refs.content, event);
     if (event.keyCode == 27 /*esc*/) this.requestClose();
   },
 
@@ -229,7 +230,7 @@ var ModalPortal = module.exports = React.createClass({
   }
 });
 
-},{"../helpers/focusManager":4,"../helpers/scopeTab":6,"classnames":9}],3:[function(_dereq_,module,exports){
+},{"../helpers/focusManager":4,"../helpers/scopeTab":6,"classnames":9,"react-dom":10}],3:[function(_dereq_,module,exports){
 var _element = null;
 
 function setElement(element) {
